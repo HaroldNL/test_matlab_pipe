@@ -43,7 +43,7 @@ jobs:
           command: pcode test_file.m
       
       - name: Print dir content
-        run: echo ls -a
+        run: cd ${GITHUB_WORKSPACE} && ls -a
           
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
