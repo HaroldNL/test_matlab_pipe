@@ -41,9 +41,12 @@ jobs:
         with:
           # Script, function, or statement to execute
           command: pcode test_file.m
+      
+      - name: Print dir content
+        run: echo ls -a
           
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage-report
-          path: output/test_file.p
+          path:  ${GITHUB_WORKSPACE}/test_file.p
