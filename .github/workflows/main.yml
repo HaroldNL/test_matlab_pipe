@@ -49,3 +49,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: test_file.p
+          tag_name: "latest"
