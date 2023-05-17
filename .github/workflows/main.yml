@@ -24,6 +24,21 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
@@ -44,9 +59,13 @@ jobs:
       
       - name: Print dir content
         run: cd ${GITHUB_WORKSPACE} && ls -a
-          
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v3
+        
+      - name: upload linux artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
-          name: code-coverage-report
-          path:  ${GITHUB_WORKSPACE}/test_file.p
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${GITHUB_WORKSPACE}/test_file.p
+          asset_name: test_file.p
+          asset_content_type: application/octet-stream
