@@ -16,31 +16,15 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  stage:
+  build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.create_release.outputs.upload_url }}
-    
-    permissions: write-all
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
-      - name: Create Release
-        id: create_release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          automatic_release_tag: "latest"
-  
-  build:
-    runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
@@ -61,12 +45,8 @@ jobs:
       - name: Print dir content
         run: cd ${GITHUB_WORKSPACE} && ls -a
         
-      - name: upload linux artifact
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          upload_url: ${{ needs.stage.outputs.output1 }}
-          asset_path: ${GITHUB_WORKSPACE}/test_file.p
-          asset_name: test_file.p
-          asset_content_type: application/octet-stream
+          files: test_file.p
