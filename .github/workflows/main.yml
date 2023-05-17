@@ -13,14 +13,14 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-permissions: write-all
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  stage:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    
+    permissions: write-all
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -34,7 +34,11 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           automatic_release_tag: "latest"
-
+  
+  build:
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
@@ -60,7 +64,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ stage.steps.create_release.outputs.upload_url }}
           asset_path: ${GITHUB_WORKSPACE}/test_file.p
           asset_name: test_file.p
           asset_content_type: application/octet-stream
