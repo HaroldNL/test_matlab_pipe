@@ -11,7 +11,7 @@ assert(a == 40);
 end
 
 function subFolderNames = GetFolders(DirWithFolders)
-files = dir(classes);
+files = dir(DirWithFolders);
 dirFlags = [files.isdir];
 subFolders = files(dirFlags);
 subFolderNames = {subFolders(3:end).name} % Start at 3 to skip . and ..
