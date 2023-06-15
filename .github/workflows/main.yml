@@ -60,6 +60,9 @@ jobs:
 
       - name: Print build content after delete m-files
         run: cd ${GITHUB_WORKSPACE} && cd build && ls -a
+      
+      - name: Print classes content after delete
+        run: cd ${GITHUB_WORKSPACE} && cd build/classes/@A && ls -a
 
       # - name: Release
       #   uses: softprops/action-gh-release@v1
