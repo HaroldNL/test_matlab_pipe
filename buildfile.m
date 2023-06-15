@@ -24,20 +24,20 @@ base = fullfile(getenv("GITHUB_WORKSPACE"),"build", "*.m");
 pcode(base,"-inplace")
 
 classes = fullfile(getenv("GITHUB_WORKSPACE"),"build","classes");
-subfolders = subFolderNames(classes)
+subfolders = GetFolders(classes)
 
 for k = 1 : length(subfolders)
 	fprintf('Sub folder #%d = %s\n', k, subfolders{k});
     here = fullfile(getenv("GITHUB_WORKSPACE"),"build","classes", subfolders{k})
 
-    subsubfolders = subFolderNames(here)
+    subsubfolders = GetFolders(here)
     if length(subsubfolders) > 0
         for j = 1 : length(subsubfolders)
             convert_path = fullfile(here, subsubfolders{j}, "*.m");
             pcode(convert_path,'-inplace')
         end
     end
-    
+
     convert_path = fullfile(here, "*.m");
     pcode(convert_path,'-inplace')
 end
