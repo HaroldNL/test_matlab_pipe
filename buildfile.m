@@ -10,21 +10,34 @@ a = 40
 assert(a == 40);
 end
 
+function subFolderNames = GetFolders(DirWithFolders)
+files = dir(classes);
+dirFlags = [files.isdir];
+subFolders = files(dirFlags);
+subFolderNames = {subFolders(3:end).name} % Start at 3 to skip . and ..
+end
+
+
 function buildTask(~)
 % Create pcode
 base = fullfile(getenv("GITHUB_WORKSPACE"),"build", "*.m");
 pcode(base,"-inplace")
 
 classes = fullfile(getenv("GITHUB_WORKSPACE"),"build","classes");
-files = dir(classes);
-dirFlags = [files.isdir];
-subFolders = files(dirFlags);
-subFolderNames = {subFolders(3:end).name} % Start at 3 to skip . and ..
+subfolders = subFolderNames(classes)
 
-for k = 1 : length(subFolderNames)
-	fprintf('Sub folder #%d = %s\n', k, subFolderNames{k});
-    subf = fullfile(getenv("GITHUB_WORKSPACE"),"build","classes", subFolderNames{k}, "*.m");
-    pcode(subf,'-inplace')
+for k = 1 : length(subfolders)
+	fprintf('Sub folder #%d = %s\n', k, subfolders{k});
+    here = fullfile(getenv("GITHUB_WORKSPACE"),"build","classes", subfolders{k})
+
+    subsubfolders = subFolderNames(here)
+    for j = 1 : length(subsubfolders):
+        convert_path = fullfile(here, subsubfolders{j}, "*.m");
+        pcode(convert_path,'-inplace')
+    end
+
+    convert_path = fullfile(here, "*.m");
+    pcode(convert_path,'-inplace')
 end
 
 end
