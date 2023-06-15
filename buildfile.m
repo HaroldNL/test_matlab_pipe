@@ -12,6 +12,6 @@ end
 
 function buildTask(~)
 % Create pcode
-CurrPath = "./build/";
+CurrPath = fullfile(getenv("GITHUB_WORKSPACE"),'build');
 rpcode(CurrPath,'-inplace');
 end

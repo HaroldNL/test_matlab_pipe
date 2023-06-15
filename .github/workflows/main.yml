@@ -32,6 +32,9 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
       
+      - name: Print dir
+        run: echo ${GITHUB_WORKSPACE}
+      
       - name: Setup MATLAB
         # You may pin to the exact commit or the version.
         # uses: matlab-actions/setup-matlab@5b825d0ad4205ef03dc40ba3b24cad22674e9ca3
@@ -48,7 +51,7 @@ jobs:
         uses: matlab-actions/run-build@v1
       
       - name: Print dir content
-        run: echo ${GITHUB_WORKSPACE} && cd ${GITHUB_WORKSPACE} && ls -a
+        run: cd ${GITHUB_WORKSPACE} && ls -a
         
       # - name: Release
       #   uses: softprops/action-gh-release@v1
