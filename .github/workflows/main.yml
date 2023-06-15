@@ -56,7 +56,7 @@ jobs:
         run: cd ${GITHUB_WORKSPACE} && cd build/classes/@A && ls -a
 
       - name: Delete m-files
-        run:  find ${GITHUB_WORKSPACE}/build/ -mindepth 0 -regex '\./[^\.].*' -type f -iname \*.m -delete
+        run:  cd ${GITHUB_WORKSPACE} && cd build && find ./ -name '*.m' -delete
 
       - name: Print build content after delete m-files
         run: cd ${GITHUB_WORKSPACE} && cd build && ls -a
