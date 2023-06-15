@@ -12,5 +12,6 @@ end
 
 function buildTask(~)
 % Create pcode
-rpcode()
+CurrPath = pwd;
+rpcode(CurrPath,'-inplace');
 end
