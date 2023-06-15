@@ -54,6 +54,18 @@ jobs:
       
       - name: Print classes content
         run: cd ${GITHUB_WORKSPACE} && cd build/classes/@A && ls -a
+
+      - name: Delete m-files
+        run:  | 
+              for dir in ${GITHUB_WORKSPACE}/build/*
+              do
+                  echo "${dir##*/}"
+                  rm dir/*.m
+              done
+              
+      - name: Print build content after delete m-files
+        run: cd ${GITHUB_WORKSPACE} && cd build && ls -a
+
       # - name: Release
       #   uses: softprops/action-gh-release@v1
       #   with:
