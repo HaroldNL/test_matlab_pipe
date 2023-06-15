@@ -50,8 +50,8 @@ jobs:
       - name: Print dir content
         run: cd ${GITHUB_WORKSPACE} && ls -a
         
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: test_file.p
-          tag_name: "latest"
+      # - name: Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     files: test_file.p
+      #     tag_name: "latest"

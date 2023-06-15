@@ -12,5 +12,5 @@ end
 
 function buildTask(~)
 % Create pcode
-pcode test_file.m
+rpcode()
 end
