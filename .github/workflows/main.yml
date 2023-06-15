@@ -56,13 +56,8 @@ jobs:
         run: cd ${GITHUB_WORKSPACE} && cd build/classes/@A && ls -a
 
       - name: Delete m-files
-        run:  | 
-              for dir in ${GITHUB_WORKSPACE}/build/*
-              do
-                  echo "${dir##*/}"
-                  rm dir/*.m
-              done
-              
+        run:  find ${GITHUB_WORKSPACE}/build/ -mindepth 0 -regex '\./[^\.].*' -type f -iname \*.m -delete
+
       - name: Print build content after delete m-files
         run: cd ${GITHUB_WORKSPACE} && cd build && ls -a
 
@@ -71,3 +66,5 @@ jobs:
       #   with:
       #     files: test_file.p
       #     tag_name: "latest"
+
+      # find ./ -mindepth 1 -regex '\./[^\.].*' -type f -iname \*.m -delete
