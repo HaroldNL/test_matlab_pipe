@@ -12,6 +12,8 @@ end
 
 function buildTask(~)
 % Create pcode
-CurrPath = fullfile(getenv("GITHUB_WORKSPACE"),'build');
-rpcode(CurrPath,'-inplace');
+base = fullfile(getenv("GITHUB_WORKSPACE"),"build", "*.m");
+pcode(base)
+classes = fullfile(getenv("GITHUB_WORKSPACE"),"build","classes", "*.m");
+pcode(classes)
 end

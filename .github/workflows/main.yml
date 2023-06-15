@@ -51,7 +51,9 @@ jobs:
 
       - name: Print build content
         run: cd ${GITHUB_WORKSPACE} && cd build && ls -a
-        
+      
+      - name: Print classes content
+        run: cd ${GITHUB_WORKSPACE} && cd build/classes && ls -a
       # - name: Release
       #   uses: softprops/action-gh-release@v1
       #   with:
