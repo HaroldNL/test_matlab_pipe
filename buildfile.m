@@ -16,11 +16,15 @@ base = fullfile(getenv("GITHUB_WORKSPACE"),"build", "*.m");
 pcode(base,"-inplace")
 
 classes = fullfile(getenv("GITHUB_WORKSPACE"),"build","classes");
-subfolders = subdir(classes)  % listing all path of the subfolders 
-subfolders{end+1}=classes     % also include folder 'path' to the list 
-for i=1:nfolders
-	disp(['Parsing M-files into the P-files: folder ' subfolders{i}])
-    pcode([subfolders{i} '\*.m'],'-inplace')
+files = dir(classes)
+dirFlags = [files.isdir];
+subFolders = files(dirFlags);
+subFolderNames = {subFolders(3:end).name} % Start at 3 to skip . and ..
+
+for k = 1 : length(subFolderNames)
+	fprintf('Sub folder #%d = %s\n', k, subFolderNames{k});
+    subf = fullfile(getenv("GITHUB_WORKSPACE"),"build","classes", subFolderNames{k}, "*.m")
+    pcode(subf,'-inplace')
 end
 
 end
