@@ -31,11 +31,13 @@ for k = 1 : length(subfolders)
     here = fullfile(getenv("GITHUB_WORKSPACE"),"build","classes", subfolders{k})
 
     subsubfolders = subFolderNames(here)
-    for j = 1 : length(subsubfolders):
-        convert_path = fullfile(here, subsubfolders{j}, "*.m");
-        pcode(convert_path,'-inplace')
+    if length(subsubfolders) > 0
+        for j = 1 : length(subsubfolders)
+            convert_path = fullfile(here, subsubfolders{j}, "*.m");
+            pcode(convert_path,'-inplace')
+        end
     end
-
+    
     convert_path = fullfile(here, "*.m");
     pcode(convert_path,'-inplace')
 end
